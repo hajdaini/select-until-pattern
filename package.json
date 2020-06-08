@@ -1,0 +1,84 @@
+{
+	"name": "select-until-pattern",
+	"displayName": "Select until pattern",
+	"description": "Expand the selections in the current text document and cursor until a match for your input string or pattern is found",
+	"version": "0.0.1",
+	"publisher": "hajdaini",
+	"author": {
+		"name": "hajdaini"
+	},
+	"icon": "images/icon.png",
+	"license": "MIT",
+	"homepage": "https://github.com/hajdaini/select-until-pattern",
+	"keywords": [
+		"select",
+		"move",
+		"fast",
+		"until",
+		"pattern",
+		"word",
+		"regex"
+	],
+	"bugs": {
+		"url": "https://github.com/hajdaini/select-until-pattern/issues",
+		"email": "ajdaini.hatim@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/hajdaini/select-until-pattern"
+	},
+	"engines": {
+		"vscode": "^1.45.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:extension.select-until-pattern"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.select-until-pattern",
+				"title": "Select until pattern"
+			}
+		],
+		"configuration": {
+			"title": "select-until-pattern",
+			"properties": {
+				"select-until-pattern.includePatternInSelection": {
+					"type": "boolean",
+					"default": false,
+					"description": "Include or not the searched word/pattern in the selection"
+				},
+				"select-until-pattern.saveLastPattern": {
+					"type": "boolean",
+					"default": true,
+					"description": "Save the last word/pattern searched in the user input"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "yarn run compile",
+		"compile": "tsc -p ./",
+		"lint": "eslint src --ext ts",
+		"watch": "tsc -watch -p ./",
+		"pretest": "yarn run compile && yarn run lint",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.45.0",
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^7.0.2",
+		"@types/node": "^13.11.0",
+		"eslint": "^6.8.0",
+		"@typescript-eslint/parser": "^2.30.0",
+		"@typescript-eslint/eslint-plugin": "^2.30.0",
+		"glob": "^7.1.6",
+		"mocha": "^7.1.2",
+		"typescript": "^3.8.3",
+		"vscode-test": "^1.3.0"
+	}
+}
