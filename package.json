@@ -1,7 +1,7 @@
 {
 	"name": "select-until-pattern",
 	"displayName": "Select until pattern",
-	"description": "Expand the selections in the current text document and cursor until a match for your input string or pattern is found",
+	"description": "Expands selections until a match for your user input pattern is found (works with regex and multi-lines)",
 	"version": "0.0.1",
 	"publisher": "hajdaini",
 	"author": {
