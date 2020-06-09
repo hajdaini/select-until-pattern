@@ -1,6 +1,6 @@
 # select-until-pattern
 
-This *Visual Studio Code* extension allows you to quickly select your texts by expanding the selections in the current text document and cursor until a match for your input string or pattern is found.
+This *Visual Studio Code* offers several actions to quickly enlarge your selection by selecting text from the current position of your cursor to the pattern and actions described on the user input.
 
 ![demo](images/demo.gif)
 
