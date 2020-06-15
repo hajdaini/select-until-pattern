@@ -36,12 +36,8 @@ This extension contributes the following settings:
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of the extension
+See [CHANGELOG](CHANGELOG.md)
 
 *Logo made by [ultimatearm](https://www.flaticon.com/authors/ultimatearm)*
 
-**Enjoy!**
+**Enjoy 😄!**

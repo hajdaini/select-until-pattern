@@ -39,16 +39,16 @@ function indexOfOccurrence(line: string, pattern: string, occurrenceNbr: number,
 /**
  * Get the position of the pattern in the editor
  * 
- * @param {vscode.TextEditor} editor
+ * @param {vscode.Position} editor
  * @param {string} text 
  * @param {string} pattern 
  * @param {boolean} reverse 
  * @param {boolean} isIgnoreCase
  * @param {boolean} isPatternInclude 
- * @return {vscode.Position}
+ * @return {vscode.Position | null}
  */
 function getPatternPosition(
-    editor: vscode.TextEditor,
+    currentCursor: vscode.Position,
     text: string,
     pattern: string,
     reverse: boolean = false,
@@ -97,12 +97,12 @@ function getPatternPosition(
 
             var index = indexOfOccurrence(lines[l], pattern, occurrenceNbr, reverse, isIgnoreCase);
 
-            endPosLine = reverse ? (editor.selection.active.line - l) : (editor.selection.active.line + l);
+            endPosLine = reverse ? (currentCursor.line - l) : (currentCursor.line + l);
             if (reverse) {
                 endPosIndex = index;
             } else {
-                if (endPosLine == editor.selection.active.line) { // pattern in same line as cursor line
-                    endPosIndex = index + editor.selection.active.character;
+                if (endPosLine == currentCursor.line) { // pattern in same line as cursor line
+                    endPosIndex = index + currentCursor.character;
                 } else {
                     endPosIndex = index;
                 }
@@ -121,10 +121,11 @@ function getPatternPosition(
     }
 }
 
-    function deleteSelection(editor: vscode.TextEditor) {
-        var selection = editor.selection;
+    function deleteSelection(editor: vscode.TextEditor, allSelections: vscode.Selection[]) {
         editor.edit(builder => {
-            builder.replace(selection, "");
+            allSelections.forEach(selection => {
+                builder.replace(selection, "");
+            });
         });
     }
 
@@ -169,21 +170,30 @@ function getPatternPosition(
         isPatternInclude: boolean = false,
         isPatternNotInclude: boolean = false
     ) {
-        var startedSelection = editor.selection.active;
-        var text = getTextRange(editor, reverse, startedSelection);
-        var patternPosition = getPatternPosition(editor, text, input, reverse, isIgnoreCase, isPatternInclude, isPatternNotInclude);
+        var allSelections: vscode.Selection[] = [];
+        var notFoundRepeat = 0;
+        for (let i = 0; i < editor.selections.length; i++) {
+            var currentCursor = editor.selections[i].active;
+            var text = getTextRange(editor, reverse, currentCursor);
+            var patternPosition = getPatternPosition(currentCursor, text, input, reverse, isIgnoreCase, isPatternInclude, isPatternNotInclude);
 
-        if (patternPosition == null) {
-            vscode.window.showErrorMessage(`Not found : ${input}`);
-            return null;
-        } else {
-            if (reverse) {
-                editor.selection = new vscode.Selection(startedSelection, patternPosition);
+            if (patternPosition == null) {
+                notFoundRepeat += 1;
             } else {
-                editor.selection = new vscode.Selection(patternPosition, startedSelection);
+                if (reverse) {
+                    allSelections.push(new vscode.Selection(currentCursor, patternPosition));
+                } else {
+                    allSelections.push(new vscode.Selection(patternPosition, currentCursor));
+                }
             }
+            
+        }
+        if(editor.selections.length >= notFoundRepeat){
+            vscode.window.showErrorMessage(`Not found : ${input}`);
+        }else{
+            editor.selections = allSelections;
             if (isDeleteSelection) {
-                deleteSelection(editor);
+                deleteSelection(editor, allSelections);
             }
         }
     }

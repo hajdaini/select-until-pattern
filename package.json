@@ -2,7 +2,7 @@
 	"name": "select-until-pattern",
 	"displayName": "Select until pattern",
 	"description": "Offers several actions to quickly enlarge your selection by selecting text from the current position of your cursor to the pattern and actions described on the user input.",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"publisher": "hajdaini",
 	"author": {
 		"name": "hajdaini"
