@@ -188,7 +188,7 @@ function getPatternPosition(
             }
             
         }
-        if(editor.selections.length >= notFoundRepeat){
+        if(notFoundRepeat >= editor.selections.length){
             vscode.window.showErrorMessage(`Not found : ${input}`);
         }else{
             editor.selections = allSelections;

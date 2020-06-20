@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.0.3] - 2020-06-20
+
+### Fixed
+
+- Fix the "Not Found" in research
+
 ## [0.0.2] - 2020-06-16
 
 ### Added
